@@ -1,0 +1,71 @@
+{
+  "server": {
+    "port": 3200
+  },
+  "client_errors": {
+    "400": {"error_code": null, "log_level": "notice"},
+    "401": {"error_code": "AUTHORIZATION_ERROR", "log_level": "notice"},
+    "404": {"error_code": "RESOURCE_NOT_FOUND", "log_level": "notice"},
+    "405": {"error_code": "METHOD_NOT_SUPPORTED", "log_level": "notice"},
+    "406": {"error_code": "CONTENT_TYPE_NOT_SUPPORTED", "log_level": "notice"},
+    "409": {"error_code": "CONFLICT_ERROR", "log_level": "notice"}
+  },
+  "mongo": {
+    "database_host": "mongodb://localhost:27017/bts",
+    "options": {
+      "useNewUrlParser": true
+    }
+  },
+  "keys": {
+    "jwt_secret_key": "6MrnYHZapzmgk0yJ0VgF"
+  },
+  "mail": {
+    "host": "",
+    "port": 123,
+    "user": "",
+    "pass": ""
+  },
+  "logger": {
+    "stack": {
+      "app": "BetterTechSolution"
+    },
+    "level": "info"
+  },
+  "swagger_ui_config": {},
+  
+  "cloudinary": {
+    "cloud_name": "bts-server",
+    "api_key": "398896565469214",
+    "api_secret": "aUuwVyd6bOvIYqyPFi1pOVf8h78"
+  },
+  "aws": {
+    "bucket_name": "bts-spaces",
+    "secret_key": "YRNFNFOQAJg4Ak1yEuGQaAs2+TxOmJpFrwYuhqomn64",
+    "access_key": "MZUVNQMHHOUMEJBFRLL5",
+    "endpoint": "ams3.cdn.digitaloceanspaces.com",
+    "signature_version": "v2",
+    "file_size": {
+      "item_image": 5120000,
+      "card_image": 5120000
+    },
+    "region": "ap-south-1"
+  },
+  "payment": {
+    "stripe": {
+      "secret_key":"sk_test_51J83FOSHqNstW8SUmrHnmFUU45hgbOiAuMC0VAFPTVcpwJ7Fjz9qk5xxiCahidjaUxVnuPnDZC6Oq7W1FmbXJSEz00fxjja8ks",
+      "public_key": "pk_test_51J83FOSHqNstW8SUpv66ptlTLuhI2jjsrv8UVu7jK2hwUFTv0UPhKYJnalCsLB0Yez0d2eaCa1AMYxXlu3WMmRKE00PtG9G1E0"
+    },
+    "square": {
+      "secret_key": "EAAAEMAbF_kfL7G-9XytT6PFmJHbFubxCHI4M2VORlhpAsLxC3eUoz4CR1rWr1Uh",
+      "application_id": "sandbox-sq0idb-CHWfGOqnjy3VCJ-uIgARYw"
+    }
+  },
+  "token": {
+    "reset_password": 5
+  },
+  "job": {
+    "make_offer": 180000,
+    "order_deliver": 120000
+  },
+  "item_image_count": 5
+}
