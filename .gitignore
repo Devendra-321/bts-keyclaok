@@ -3,6 +3,8 @@ logs
 *.log
 npm-debug.log*
 
+.bak 
+
 # idea
 .idea/*
 # Dependency directories

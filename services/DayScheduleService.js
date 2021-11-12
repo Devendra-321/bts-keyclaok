@@ -4,6 +4,8 @@ const _ = require("lodash");
 const async = require("async");
 const { DaySchedule } = require("../models");
 const { QueryHelper } = require("../helpers/bts-query-utils");
+const JWT = require("jsonwebtoken");
+
 const {
   RuntimeError,
   ResourceNotFoundError,
@@ -24,8 +26,8 @@ class DayScheduleService {
    * @param {IncomingMessage} res - The http response object
    * @param {function} next - The callback used to pass control to the next action/middleware
    */
-   createDaySchedule(req, res, next) {
-    let userId = req.authentication.jwt.payload.user_id;
+  createDaySchedule(req, res, next) {
+    let userId = JWT.decode(req.headers["x-request-jwt"]).sub; // req.authentication.jwt.payload.user_id;
     let schedule = req.swagger.params.schedule.value;
     let dayScheduleDetails = new DaySchedule({
       day: schedule.day,

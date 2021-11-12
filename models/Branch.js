@@ -21,7 +21,7 @@ const BranchSchema = new Schema(
       type: Object
     },
     'created_by': {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       required: true
     },
     'is_deleted': {

@@ -10,9 +10,9 @@ const DeliveryChargeTypeSchema = new Schema(
       enum: ['POSTCODE', 'AREA', 'SPENDING'],
       default: 'POSTCODE'
     },
-    'created_by': {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true
+    created_by: {
+      type: String,
+      required: true,
     },
     'is_deleted': {
       type: Boolean,

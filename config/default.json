@@ -11,7 +11,7 @@
     "409": {"error_code": "CONFLICT_ERROR", "log_level": "notice"}
   },
   "mongo": {
-    "database_host": "mongodb://localhost:27017/bts",
+    "database_host": "mongodb://bts-mdb-01.bettertechsolutions.net:27017/bts",
     "options": {
       "useNewUrlParser": true
     }

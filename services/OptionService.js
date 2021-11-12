@@ -4,6 +4,8 @@ const _ = require("lodash");
 const async = require("async");
 const { Option } = require("../models");
 const { QueryHelper } = require("../helpers/bts-query-utils");
+
+const JWT = require('jsonwebtoken');
 const {
   RuntimeError,
   ResourceNotFoundError,
@@ -25,7 +27,7 @@ class OptionService {
    * @param {function} next - The callback used to pass control to the next action/middleware
    */
    createOption(req, res, next) {
-    let userId = req.authentication.jwt.payload.user_id;
+    let userId = JWT.decode(req.headers['x-request-jwt']).sub; //req.authentication.jwt.payload.user_id;
     let option = req.swagger.params.option.value;
     let optionDetails = new Option({
       name: option.name,

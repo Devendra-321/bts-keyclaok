@@ -14,7 +14,7 @@ const OrderValueSchema = new Schema(
       type: Number
     },
     'created_by': {
-      type: mongoose.Schema.Types.ObjectId,
+      type:String,
       required: true
     },
     'is_deleted': {

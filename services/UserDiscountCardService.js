@@ -4,6 +4,8 @@ const _ = require("lodash");
 const async = require("async");
 const { UserDiscountCard, CheckoutFacility } = require("../models");
 const { QueryHelper } = require("../helpers/bts-query-utils");
+const JWT = require("jsonwebtoken");
+
 const {
   RuntimeError,
   ResourceNotFoundError,
@@ -24,8 +26,8 @@ class UserDiscountCardService {
    * @param {IncomingMessage} res - The http response object
    * @param {function} next - The callback used to pass control to the next action/middleware
    */
-   purchaseGiftCard(req, res, next) {
-    let userId = req.authentication.jwt.payload.user_id;
+  purchaseGiftCard(req, res, next) {
+    let userId = JWT.decode(req.headers["x-request-jwt"]).sub; //req.authentication.jwt.payload.user_id;
     let card = req.swagger.params.card.value;
     let checkoutFacilityDetails = new UserDiscountCard({
       user_id: userId,
@@ -59,7 +61,7 @@ class UserDiscountCardService {
    * @param {function} next - The callback used to pass control to the next action/middleware
    */
    getGiftCardList(req, res, next) {
-    let userId = req.authentication.jwt.payload.user_id;
+    let userId =JWT.decode(req.headers['x-request-jwt']).sub;// req.authentication.jwt.payload.user_id;
     let query = QueryHelper.getQuery(req.swagger.params);
     // query.is_removed = false;
     query.user_id = userId;

@@ -152,6 +152,42 @@ class AuthenticationService {
     );
   }
 
+
+  /**
+   * Creates a new user
+   *
+   * @param {object} swaggerParams - The swagger parameter
+   * @param {IncomingMessage} res - The http response object
+   * @param {function} next - The callback used to pass control to the next action/middleware
+   */
+   guestUserSignIn(swaggerParams, res, next) {
+     console.log('in side guest user ');
+     
+     var request = require('request');
+     var options = {
+       'method': 'POST',
+       'url': 'https://identity.bettertechsolutions.net/auth/realms/demo-public/protocol/openid-connect/token',
+       'headers': {
+         'Content-Type': 'application/x-www-form-urlencoded'
+       },
+       form: {
+         'client_id': 'TestClient',
+         'username': 'guestuser@gmail.com',
+         'password': 'guestuser',
+         'grant_type': 'password'
+       }
+     };
+     request(options, function (error, response) {
+       if (error) throw new Error(error);
+       console.log( response.statusCode);
+       res.setHeader("Content-Type", "application/json");
+       response.statusCode = 200;
+       res.end(response.body);
+     });
+  }
+
+
+
   /**
    * Verify an email
    *
@@ -459,7 +495,7 @@ function CheckUser(query, callback) {
  * @param {String} subject - The email subject
  * @param {function} callback - The callback used to pass control to the next action/middleware
  *
- * @private
+ *
  */
 function _sendVerificationMail(emailId, link, file, subject, callback) {
   let content;

@@ -5,6 +5,7 @@ const async = require("async");
 const { ObjectId } = require("mongoose").Types;
 const { uploadS3 } = require("../helpers/AWSHelper");
 const { Branch } = require("../models");
+const JWT = require("jsonwebtoken");
 
 const { QueryHelper } = require("../helpers/bts-query-utils");
 const {
@@ -28,8 +29,8 @@ class BranchService {
    * @param {IncomingMessage} res - The http response object
    * @param {function} next - The callback used to pass control to the next action/middleware
    */
-   createBranch(req, res, next) {
-    let userId = req.authentication.jwt.payload.user_id;
+  createBranch(req, res, next) {
+    let userId = JWT.decode(req.headers["x-request-jwt"]).sub; //req.authentication.jwt.payload.user_id;
     let branchName = req.swagger.params.branch_name.value;
     let website = req.swagger.params.branch_website.value;
     let map = req.swagger.params.branch_map.value;

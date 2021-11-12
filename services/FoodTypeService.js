@@ -311,7 +311,8 @@ class FoodTypeService {
    */
   bulkCreateFoodType(req, res, next) {
     let excelFile = req.files.file[0];
-    let userId = req.authentication.jwt.payload.user_id;
+    let userId = JWT.decode(req.headers["x-request-jwt"]).sub;
+    //req.authentication.jwt.payload.user_id;
     if (
       ["xlsx"].indexOf(
         excelFile.originalname.split(".")[

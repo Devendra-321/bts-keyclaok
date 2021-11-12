@@ -3,12 +3,19 @@
 const _ = require('lodash');
 const config = require('config');
 const JWT = require('jsonwebtoken');
+var mongoose = require('mongoose');
 const app = require('connect')();
 const KeyCloakCerts = require('get-keycloak-public-key');
+const AuthenticationService = require('../services/AuthenticationService');
 const { User } = require('../models');
 const request = require("request");
+const passwordHash = require("password-hash");
 const { AuthorizationError, RuntimeError } = require('../helpers/bts-error-utils');
-
+const {
+    ValidationError,
+    ConflictError,
+    ResourceNotFoundError
+} = require("../helpers/bts-error-utils");
 // const keycloak = require('keycloak-backend')({
 //   "realm": "demo-public",
 //   "auth-server-url": "https://identity.bettertechsolutions.net",
@@ -123,7 +130,6 @@ module.exports = {
         }
 
         JWT.verify(token, secret, function roleAuthentication(err, decoded) {
-            console.log(JWT.decode(token));
             var keyCloakRole = [];
             var role = "";
             var keycloakObject = JWT.decode(token);
@@ -139,10 +145,10 @@ module.exports = {
 
             }
             for (var i = 0; i < keyCloakRole.length; i++) {
-                console.log(keyCloakRole[i]);
+                console.log("role form keycloak" + keyCloakRole[i]);
                 role = keyCloakRole[i]
             }
-             console.log(req.swagger.operation['x-role']);
+            console.log("role from swagger  " + req.swagger.operation['x-role']);
             if (!_.isEqual(role, req.swagger.operation['x-role'])) {
                 return next(new AuthorizationError('This api is not accessible for your role'));
             }
@@ -181,5 +187,109 @@ module.exports = {
                     return next();
                 });
         });
+    },
+    /**
+     * Check the blog role from the JWT token
+     *
+     * @param {object} req - The request object
+     * @param {object} token - The token passed to the helper
+     * @param {object} secret - The secret specified by the api
+     * @param {function} next - The next callback with structure function(err)
+     */
+    checkExistUser: async function checkExistUser(req, token, next) {
+        let jwtToken = req.headers['x-request-jwt'];
+        let decodeToken = JWT.decode(jwtToken);
+        console.log(JWT.decode(jwtToken));
+        let userEmail = decodeToken.email;
+        let userName = decodeToken.name;
+        let email_verified = decodeToken.email_verified;
+        let userid = decodeToken.sub;
+        var keyCloakRole = [];
+        var role = "";
+        var keycloakObject = JWT.decode(token);
+        var resource_access = keycloakObject.resource_access;
+        console.log(userid);
+        for (var key in resource_access) {
+            if (key === keycloakObject.azp) {
+                var roles = resource_access[key];
+                for (var keyname in roles) {
+                    keyCloakRole = roles[keyname];
+                }
+            }
+        }
+        for (var i = 0; i < keyCloakRole.length; i++) {
+            console.log("role form keycloak" + keyCloakRole[i]);
+            role = keyCloakRole[i]
+        }
+
+
+        let userDetails = new User({
+          _id: userid,
+            name: userName,
+            email: userEmail,
+            role: role,
+            password: passwordHash.generate("keycloak"),
+            is_email_verified: email_verified,
+            contact_number: "1234567891",
+        });
+      
+        User.findOne({email:userEmail}).exec((userCheckError, userCheckResult) => {
+            if (userCheckError) {
+                let runtimeErrorObj = new RuntimeError(
+                    "There was an error while finding user",
+                    userFindOneError
+                );
+                return callback(runtimeErrorObj);
+            }
+             if (!_.isEmpty(userCheckResult)) {
+                // if (userCheckResult.is_email_verified) {
+                //     let validationErrorObj = new ValidationError(
+                //         "Whoops!\n A user with that email address already exists!"
+                //     );
+                //     return next(validationErrorObj);
+                // }
+                //   if (!userCheckResult.is_email_verified) {
+                //     let conflictError = new ConflictError(
+                //       "The account is not verified, please verify your account"
+                //     );
+                //     return next(conflictError);
+                //   }
+                return next();
+            }else{
+                userDetails.save((saveError, saveUser) => {
+                    console.log(saveUser);
+                    if (saveError) {
+                        let runtimeError = new RuntimeError(
+                            "There was an error while creating a new user",
+                            saveError
+                        );
+                        return next(runtimeError);
+                    }
+                //     let link = `http://localhost:3200/v1/update-email-status?email_id=${userEmail}`
+                //    _sendVerificationMail(saveUser.email, link, 'EmailVerification.html', 'Please verify your email', (mailError) => {
+                //       if (mailError) {
+                //         let runtimeError = new RuntimeError(
+                //           "There was an error while sending email verification mail to the registered user",
+                //           mailError
+                //         );
+                //         return next(runtimeError);
+                //       }
+                 
+                //     });
+    
+                });
+            }
+       
+            
+        });
+           
+         
+
+     
+
+
     }
+
 };
+
+

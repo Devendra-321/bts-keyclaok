@@ -10,6 +10,8 @@ const { Readable } = require("stream");
 const autocorrect = require("autocorrect")();
 const { ObjectId } = require("mongoose").Types;
 const appDir = path.dirname(require.main.filename);
+const JWT = require("jsonwebtoken");
+
 const { uploadS3 } = require("../helpers/AWSHelper");
 
 const {
@@ -43,7 +45,7 @@ class ItemService {
    * @param {function} next - The callback used to pass control to the next action/middleware
    */
   createItem(req, res, next) {
-    let userId = req.authentication.jwt.payload.user_id;
+    let userId = JWT.decode(req.headers["x-request-jwt"]).sub; //req.authentication.jwt.payload.user_id;
     let item = req.swagger.params.item.value;
     let categoryId = item.category_id;
     let subCategoryId = item.sub_category_id;
@@ -598,7 +600,7 @@ class ItemService {
    */
   bulkCreateItem(req, res, next) {
     let excelFile = req.files.file[0];
-    let userId = req.authentication.jwt.payload.user_id;
+    let userId = JWT.decode(req.headers['x-request-jwt']).sub;//req.authentication.jwt.payload.user_id;
     if (
       ["xlsx"].indexOf(
         excelFile.originalname.split(".")[

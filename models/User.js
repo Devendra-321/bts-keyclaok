@@ -5,6 +5,9 @@ let Schema = mongoose.Schema;
 
 const UserSchema = new Schema(
   {
+    '_id':{
+      type:Object
+    },
     'name': {
       type: String
     },
@@ -27,8 +30,8 @@ const UserSchema = new Schema(
     },
     'role': {
       type: String,
-      enum: ['ADMIN', 'USER', 'SUPER_ADMIN'],
-      default: 'USER'
+      enum: ['admin', 'user', 'super_admin'],
+      default: 'user'
     },
     'last_login_at': {
       type: Date

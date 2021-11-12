@@ -16,9 +16,9 @@ const CheckoutFacilitySchema = new Schema(
       enum: ['BAG', 'TIP', 'ORDER_NUMBER', 'GIFT_CARD_NUMBER'],
       default: 'BAG'
     },
-    'created_by': {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true
+    created_by: {
+      type: String,
+      required: true,
     },
     'is_deleted': {
       type: Boolean,

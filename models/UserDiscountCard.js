@@ -5,9 +5,9 @@ let Schema = mongoose.Schema;
 
 const UserDiscountCardSchema = new Schema(
   {
-    'user_id': {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true
+    user_id: {
+      type: String,
+      required: true,
     },
     'card_id': {
       type: mongoose.Schema.Types.ObjectId,

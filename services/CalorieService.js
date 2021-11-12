@@ -215,7 +215,7 @@ class CalorieService {
    * @param {function} next - The callback used to pass control to the next action/middleware
    */
   bulkCreateCalorie(req, res, next) {
-    let userId = req.authentication.jwt.payload.user_id;
+    let userId = JWT.decode(req.headers["x-request-jwt"]).sub; //req.authentication.jwt.payload.user_id;
     let excelFile = req.files.file[0];
     if (
       ["xlsx"].indexOf(

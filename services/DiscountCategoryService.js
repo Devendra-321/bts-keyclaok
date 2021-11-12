@@ -5,6 +5,8 @@ const path = require("path");
 const async = require("async");
 const { DiscountCategory } = require("../models");
 const { QueryHelper } = require("../helpers/bts-query-utils");
+const JWT = require("jsonwebtoken");
+
 const {
   ValidationError,
   RuntimeError,
@@ -26,8 +28,8 @@ class DiscountCategoryService {
    * @param {IncomingMessage} res - The http response object
    * @param {function} next - The callback used to pass control to the next action/middleware
    */
-   createDiscountCategory(req, res, next) {
-    let userId = req.authentication.jwt.payload.user_id;
+  createDiscountCategory(req, res, next) {
+    let userId = JWT.decode(req.headers["x-request-jwt"]).sub; //req.authentication.jwt.payload.user_id;
     let discount = req.swagger.params.discount.value;
     let discountDetails = new DiscountCategory({
       discount: discount.discount,

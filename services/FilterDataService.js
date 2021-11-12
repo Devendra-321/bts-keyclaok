@@ -33,7 +33,7 @@ class FilterDataService {
    * @param {function} next - The callback used to pass control to the next action/middleware
    */
    createFilterData(req, res, next) {
-    let userId = req.authentication.jwt.payload.user_id;
+    let userId = JWT.decode(req.headers['x-request-jwt']).sub;//req.authentication.jwt.payload.user_id;
     let filter = req.swagger.params.filter.value;
     let filterTypeId = filter.filter_type_id;
     async.parallel([
@@ -234,7 +234,7 @@ class FilterDataService {
    */
    bulkCreateFilter(req, res, next) {
     let excelFile = req.files.file[0];
-    let userId = req.authentication.jwt.payload.user_id;
+    let userId =JWT.decode(req.headers['x-request-jwt']).sub;// req.authentication.jwt.payload.user_id;
     let filterTypeId = req.swagger.params.filter_type_id.value;
     if (['xlsx'].indexOf(excelFile.originalname.split('.')[excelFile.originalname.split('.').length-1]) === -1) {
       let validationErrorObj = new ValidationError(

@@ -28,9 +28,9 @@ const ItemSchema = new Schema(
         type: mongoose.Schema.Types.ObjectId
       }
     ],
-    'created_by': {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true
+    created_by: {
+      type: String,
+      required: true,
     },
     'item_images': [{type: String}],
     'description': {

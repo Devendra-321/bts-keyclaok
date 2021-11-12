@@ -5,9 +5,9 @@ let Schema = mongoose.Schema;
 
 const OrderSchema = new Schema(
   {
-    'user_id': {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true
+    user_id: {
+      type: String,
+      required: true,
     },
     'item_details': [
       {

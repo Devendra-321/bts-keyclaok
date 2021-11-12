@@ -9,9 +9,12 @@ const UserDiscountCodeSchema = new Schema(
       type: mongoose.Schema.Types.ObjectId,
       required: true
     },
-    'user_id': {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true
+    user_id: {
+      type: String,
+      required: true,
+    },
+    code: {
+      type: String,
     },
     'code': {
       type: String

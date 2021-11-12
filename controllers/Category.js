@@ -57,7 +57,11 @@ module.exports.updateCategory = function updateCategory(req, res, next) {
  * @param {IncomingMessage} res - The http response object
  * @param {function} next - The callback used to pass control to the next action/middleware
  */
- module.exports.bulkCreateCategory = function bulkCreateCategory(req, res, next) {
+module.exports.bulkCreateCategory = function bulkCreateCategory(
+  req,
+  res,
+  next
+) {
   let categoryService = new CategoryService(req.Logger);
   categoryService.bulkCreateCategory(req, res, next);
 };

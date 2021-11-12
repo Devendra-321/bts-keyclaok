@@ -9,7 +9,7 @@ const { Readable } = require('stream');
 const { Category, FoodType, Item } = require('../models');
 const { QueryHelper } = require('../helpers/bts-query-utils');
 const { ValidationError, RuntimeError, ResourceNotFoundError } = require('../helpers/bts-error-utils');
-const JWT = require('jsonwebtoken');
+const JWT = require("jsonwebtoken");
 const appDir = path.dirname(require.main.filename);
 
 /**
@@ -29,7 +29,7 @@ class CategoryService {
    * @param {function} next - The callback used to pass control to the next action/middleware
    */
   createCategory(req, res, next) {
-    let userId = JWT.decode(req.headers['x-request-jwt']).sub; //req.authentication.jwt.payload.user_id;
+    let userId = JWT.decode(req.headers["x-request-jwt"]).sub; //req.authentication.jwt.payload.user_id;
     let category = req.swagger.params.category.value;
     async.parallel(
       [
@@ -343,7 +343,7 @@ class CategoryService {
    */
   bulkCreateCategory(req, res, next) {
   let excelFile = req.files.file[0];
-  let userId = req.authentication.jwt.payload.user_id;
+  let userId = JWT.decode(req.headers['x-request-jwt']).sub;//req.authentication.jwt.payload.user_id;
   if (['xlsx'].indexOf(excelFile.originalname.split('.')[excelFile.originalname.split('.').length-1]) === -1) {
     let validationErrorObj = new ValidationError(
       "File should be of xlsx extension type"

@@ -42,11 +42,12 @@ const DiscountCardSchema = new Schema(
     'expiry_day': {
       type: Number
     },
-    'created_by': {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true
+  
+    created_by: {
+      type: String,
+      required: true,
     },
-    'is_deleted': {
+    is_deleted: {
       type: Boolean,
       default: false
     },

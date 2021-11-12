@@ -25,7 +25,7 @@ class DeliveryChargeTypeService {
    * @param {function} next - The callback used to pass control to the next action/middleware
    */
    createDeliveryChargeType(req, res, next) {
-    let userId = req.authentication.jwt.payload.user_id;
+    let userId = JWT.decode(req.headers['x-request-jwt']).sub;//req.authentication.jwt.payload.user_id;
     let chargeType = req.swagger.params.chargeType.value;
     let chargeTypeDetails = new DeliveryChargesType({
       type: chargeType.type,

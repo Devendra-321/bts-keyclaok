@@ -148,6 +148,23 @@ paths:
         - "Authentication"
       summary: "API to login user"
       description: "This API is responsible for login user" 
+  /signin:
+    get:
+      x-swagger-router-controller: "Authentication"
+      operationId: "guestUserSignIn"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      description: "This API is responsible for login user"
+      responses: 
+        200:
+          description: "response"
+          schema:
+            $ref: "#/definitions/user_guest_token"
+      summary: "API to get guest user token"    
+      tags:
+          - "Authentication"
   /update-email-status:
     get:
       x-swagger-router-controller: "Authentication"
@@ -179,6 +196,7 @@ paths:
     put:
       x-swagger-router-controller: "Authentication"
       operationId: "updateUserDetails"
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -212,6 +230,7 @@ paths:
     get:
       x-swagger-router-controller: "Authentication"
       operationId: "getUser"
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -240,6 +259,7 @@ paths:
       x-swagger-router-controller: "Authentication"
       operationId: "getUserList"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -347,7 +367,7 @@ paths:
       x-swagger-router-controller: "Category"
       operationId: "createCategory"
       x-blog-api: true
-      x-role: "admin"
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -439,6 +459,7 @@ paths:
       x-swagger-router-controller: "Category"
       operationId: "updateCategory"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -475,6 +496,7 @@ paths:
       x-swagger-router-controller: "Category"
       operationId: "bulkCreateCategory"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "multipart/form-data"
       produces:
@@ -510,6 +532,7 @@ paths:
       x-swagger-router-controller: "Category"
       operationId: "moveCategory"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -542,6 +565,7 @@ paths:
       x-swagger-router-controller: "SubCategory"
       operationId: "createSubCategory"
       x-blog-api: true
+      x-role : "user"
       consumes:
         - "application/json"
       produces:
@@ -636,6 +660,7 @@ paths:
       x-swagger-router-controller: "SubCategory"
       operationId: "updateSubCategory"
       x-blog-api: true
+      x-role : "user"
       consumes:
         - "application/json"
       produces:
@@ -672,6 +697,7 @@ paths:
       x-swagger-router-controller: "SubCategory"
       operationId: "bulkCreateSubCategory"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "multipart/form-data"
       produces:
@@ -707,6 +733,7 @@ paths:
       x-swagger-router-controller: "SubCategory"
       operationId: "moveSubCategory"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -868,6 +895,7 @@ paths:
       x-swagger-router-controller: "Allergy"
       operationId: "bulkCreateAllergy"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "multipart/form-data"
       produces:
@@ -993,6 +1021,7 @@ paths:
       x-swagger-router-controller: "Spice"
       operationId: "updateSpice"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -1029,6 +1058,7 @@ paths:
       x-swagger-router-controller: "Spice"
       operationId: "bulkCreateSpice"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "multipart/form-data"
       produces:
@@ -1154,6 +1184,7 @@ paths:
       x-swagger-router-controller: "Calorie"
       operationId: "updateCalorie"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -1190,6 +1221,7 @@ paths:
       x-swagger-router-controller: "Calorie"
       operationId: "bulkCreateCalorie"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "multipart/form-data"
       produces:
@@ -1311,6 +1343,7 @@ paths:
       x-swagger-router-controller: "FoodType"
       operationId: "updateFoodType"
       x-blog-api: true
+      x-role : "user"
       consumes:
         - "multipart/form-data"
       produces:
@@ -1343,6 +1376,7 @@ paths:
       x-swagger-router-controller: "FoodType"
       operationId: "updateFoodTypeStatus"
       x-blog-api: true
+      x-role : "user"
       consumes:
         - "application/json"
       produces:
@@ -1380,6 +1414,7 @@ paths:
       x-swagger-router-controller: "FoodType"
       operationId: "bulkCreateFoodType"
       x-blog-api: true
+      x-role : "user"
       consumes:
         - "multipart/form-data"
       produces:
@@ -1417,6 +1452,7 @@ paths:
       x-swagger-router-controller: "FilterType"
       operationId: "createFilterType"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -1448,6 +1484,7 @@ paths:
     get:
       x-swagger-router-controller: "FilterType"
       operationId: "getFilterTypeList"
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -1523,6 +1560,7 @@ paths:
       produces:
         - "application/json"
       x-blog-api: true  
+      x-role : "user"
       security:
         - jwt: []
       responses:
@@ -1546,6 +1584,7 @@ paths:
       x-swagger-router-controller: "FilterType"
       operationId: "updateFilterType"
       x-blog-api: true
+      x-role : "user"
       consumes:
         - "application/json"
       produces:
@@ -1583,6 +1622,7 @@ paths:
       x-swagger-router-controller: "FilterData"
       operationId: "createFilterData"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -1614,6 +1654,7 @@ paths:
     get:
       x-swagger-router-controller: "FilterData"
       operationId: "getFilterDataList"
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -1664,6 +1705,7 @@ paths:
       produces:
         - "application/json"
       x-blog-api: true  
+      x-role: "user"
       security:
         - jwt: []
       responses:
@@ -1722,6 +1764,7 @@ paths:
       x-swagger-router-controller: "FilterData"
       operationId: "bulkCreateFilter"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "multipart/form-data"
       produces:
@@ -1758,6 +1801,7 @@ paths:
       x-swagger-router-controller: "Item"
       operationId: "createItem"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -1857,6 +1901,7 @@ paths:
       x-swagger-router-controller: "Item"
       operationId: "updateItem"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -1893,6 +1938,7 @@ paths:
       x-swagger-router-controller: "Item"
       operationId: "bulkCreateItem"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "multipart/form-data"
       produces:
@@ -1928,6 +1974,7 @@ paths:
       x-swagger-router-controller: "Item"
       operationId: "moveItem"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -1963,6 +2010,7 @@ paths:
       x-swagger-router-controller: "Item"
       operationId: "uploadImages"
       x-blog-api: true
+      x-role : "user"
       consumes:
         - "multipart/form-data"
       produces:
@@ -1995,6 +2043,7 @@ paths:
       x-swagger-router-controller: "HourDiscount"
       operationId: "createHourDiscount"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -2085,6 +2134,7 @@ paths:
       x-swagger-router-controller: "HourDiscount"
       operationId: "updateHourDiscount"
       x-blog-api: true
+      x-role : "user"
       consumes:
         - "application/json"
       produces:
@@ -2121,6 +2171,7 @@ paths:
       x-swagger-router-controller: "DayDiscount"
       operationId: "createDayDiscount"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -2211,6 +2262,7 @@ paths:
       x-swagger-router-controller: "DayDiscount"
       operationId: "updateDayDiscount"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -2247,6 +2299,7 @@ paths:
       x-swagger-router-controller: "DiscountCard"
       operationId: "createDiscountCard"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -2338,6 +2391,7 @@ paths:
       x-swagger-router-controller: "DiscountCard"
       operationId: "updateDiscountCard"
       x-blog-api: true
+      x-role : "user"
       consumes:
         - "application/json"
       produces:
@@ -2377,6 +2431,7 @@ paths:
       x-swagger-router-controller: "DiscountCard"
       operationId: "uploadCardImage"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "multipart/form-data"
       produces:
@@ -2405,6 +2460,7 @@ paths:
       x-swagger-router-controller: "DiscountCategory"
       operationId: "createDiscountCategory"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -2495,6 +2551,7 @@ paths:
       x-swagger-router-controller: "DiscountCategory"
       operationId: "updateDiscountCategory"
       x-blog-api: true
+      x-role : "user"
       consumes:
         - "application/json"
       produces:
@@ -2531,6 +2588,7 @@ paths:
       x-swagger-router-controller: "OrderValue"
       operationId: "createOrderValue"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -2620,6 +2678,7 @@ paths:
       x-swagger-router-controller: "OrderValue"
       operationId: "updateOrderValue"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -2655,7 +2714,8 @@ paths:
     post:
       x-swagger-router-controller: "OrderDiscount"
       operationId: "createOrderDiscount"
-      x-blog-api: true
+      x-blog-api: 
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -2745,6 +2805,7 @@ paths:
       x-swagger-router-controller: "OrderDiscount"
       operationId: "updateOrderDiscount"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -2781,6 +2842,7 @@ paths:
       x-swagger-router-controller: "ServiceCharge"
       operationId: "createServiceCharge"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -2869,6 +2931,7 @@ paths:
       x-swagger-router-controller: "ServiceCharge"
       operationId: "updateServiceCharge"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -2905,6 +2968,7 @@ paths:
       x-swagger-router-controller: "DeliveryCharge"
       operationId: "createDeliveryCharge"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -2995,6 +3059,7 @@ paths:
       x-swagger-router-controller: "DeliveryCharge"
       operationId: "updateDeliveryCharge"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -3057,6 +3122,7 @@ paths:
       x-swagger-router-controller: "Option"
       operationId: "createOption"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -3146,6 +3212,7 @@ paths:
       x-swagger-router-controller: "Option"
       operationId: "updateOption"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -3182,6 +3249,7 @@ paths:
       x-swagger-router-controller: "OptionAttribute"
       operationId: "createAttribute"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -3271,6 +3339,7 @@ paths:
       x-swagger-router-controller: "OptionAttribute"
       operationId: "updateAttribute"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -3307,6 +3376,7 @@ paths:
       x-swagger-router-controller: "CheckoutFacility"
       operationId: "createCheckoutFacility"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -3396,6 +3466,7 @@ paths:
       x-swagger-router-controller: "CheckoutFacility"
       operationId: "updateCheckoutFacility"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -3432,6 +3503,7 @@ paths:
       x-swagger-router-controller: "DaySchedule"
       operationId: "createDaySchedule"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -3520,6 +3592,7 @@ paths:
       x-swagger-router-controller: "DaySchedule"
       operationId: "updateDaySchedule"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -3557,6 +3630,7 @@ paths:
     post:
       x-swagger-router-controller: "Cart"
       operationId: "createCart"
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -3588,6 +3662,7 @@ paths:
     get:
       x-swagger-router-controller: "Cart"
       operationId: "getCartList"
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -3624,6 +3699,7 @@ paths:
     get:
       x-swagger-router-controller: "Cart"
       operationId: "getCart"
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -3650,6 +3726,7 @@ paths:
     put:
       x-swagger-router-controller: "Cart"
       operationId: "updateCart"
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -3683,6 +3760,7 @@ paths:
     delete:
       x-swagger-router-controller: "Cart"
       operationId: "deleteCart"
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -3711,6 +3789,7 @@ paths:
       x-swagger-router-controller: "PaymentGateway"
       operationId: "createPaymentGateway"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -3800,6 +3879,7 @@ paths:
       x-swagger-router-controller: "PaymentGateway"
       operationId: "updatePaymentGateway"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -3869,6 +3949,7 @@ paths:
     get:
       x-swagger-router-controller: "Order"
       operationId: "getOrderList"
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -3910,6 +3991,7 @@ paths:
     get:
       x-swagger-router-controller: "Order"
       operationId: "getOrder"
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -3936,6 +4018,7 @@ paths:
     put:
       x-swagger-router-controller: "Order"
       operationId: "updateOrder"
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -3972,6 +4055,7 @@ paths:
     post:
       x-swagger-router-controller: "UserDiscountCard"
       operationId: "purchaseGiftCard"
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -4003,6 +4087,7 @@ paths:
     get:
       x-swagger-router-controller: "UserDiscountCard"
       operationId: "getGiftCardList"
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -4039,6 +4124,7 @@ paths:
     get:
       x-swagger-router-controller: "UserDiscountCard"
       operationId: "getGiftCard"
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -4065,6 +4151,7 @@ paths:
     put:
       x-swagger-router-controller: "UserDiscountCard"
       operationId: "updateGiftCard"
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -4100,6 +4187,7 @@ paths:
       x-swagger-router-controller: "DeliveryChargeType"
       operationId: "createDeliveryChargeType"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -4188,6 +4276,7 @@ paths:
       x-swagger-router-controller: "DeliveryChargeType"
       operationId: "updateDeliveryChargeType"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -4225,6 +4314,7 @@ paths:
     get:
       x-swagger-router-controller: "Order"
       operationId: "checkCodeValidity"
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -4342,6 +4432,7 @@ paths:
     put:
       x-swagger-router-controller: "Review"
       operationId: "updateReview"
+      x-role: "user"
       consumes:
         - "multipart/form-data"
       produces:
@@ -4371,6 +4462,7 @@ paths:
     delete:
       x-swagger-router-controller: "Review"
       operationId: "deleteReview"
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -4487,6 +4579,7 @@ paths:
     put:
       x-swagger-router-controller: "CateringEnquiry"
       operationId: "updateEnquiry"
+      x-role: "user"
       consumes:
         - "multipart/form-data"
       produces:
@@ -4516,6 +4609,7 @@ paths:
     delete:
       x-swagger-router-controller: "CateringEnquiry"
       operationId: "deleteEnquiry"
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -4549,7 +4643,8 @@ paths:
         - "application/json"
       produces:
         - "application/json" 
-      x-blog-api: true  
+      x-blog-api: true 
+      x-role: "user" 
       security:
         - jwt: [] 
       parameters:
@@ -4614,6 +4709,7 @@ paths:
     get:
       x-swagger-router-controller: "Flag"
       operationId: "getFlag"
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -4641,6 +4737,7 @@ paths:
     put:
       x-swagger-router-controller: "Flag"
       operationId: "updateFlag"
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -4677,6 +4774,7 @@ paths:
       x-swagger-router-controller: "Branch"
       operationId: "createBranch"
       x-blog-api: true
+      x-role: "user"
       security:
         - jwt: []
       consumes:
@@ -4770,6 +4868,7 @@ paths:
       produces:
         - "application/json"
       x-blog-api: true  
+      x-role: "user"
       security:
         - jwt: []
       parameters:
@@ -4835,6 +4934,7 @@ paths:
       x-swagger-router-controller: "Config"
       operationId: "createConfig"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -4910,7 +5010,8 @@ paths:
         - "application/json"
       produces:
         - "application/json"
-      x-blog-api: true  
+      x-blog-api: true 
+      x-role: "user" 
       security:
         - jwt: []
       responses:
@@ -4934,6 +5035,7 @@ paths:
       x-swagger-router-controller: "Config"
       operationId: "updateConfig"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -4969,6 +5071,7 @@ paths:
       x-swagger-router-controller: "Order"
       operationId: "orderStatistics"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -5005,6 +5108,7 @@ paths:
       x-swagger-router-controller: "Order"
       operationId: "userStatistics"
       x-blog-api: true
+      x-role: "user"
       consumes:
         - "application/json"
       produces:
@@ -6376,7 +6480,29 @@ definitions:
           - USER
           - SUPER_ADMIN
 
-        description: "The role of system authorized person"       
+        description: "The role of system authorized person"  
+  user_guest_token:
+    type: "object" 
+    properties:
+      access_token:
+         type: "string"
+         description: "The user_id"
+      expires_in:
+         type: "string"
+         description: "The user email"
+      refresh_expires_in: 
+         type: "string"
+      refresh_token:
+         type: "string"  
+      token_type:
+        type: "string"
+        description: "The user name"
+      not-before-policy:
+        type: "string"
+      session_state:
+        type: "string"
+      scope:
+        type: "string"      
   user_create_validation_error:
     type: object
     required:

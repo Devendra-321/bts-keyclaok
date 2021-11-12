@@ -5,6 +5,7 @@ const async = require("async");
 const { ObjectId } = require("mongoose").Types;
 const { DeliveryCharge, Branch } = require("../models");
 const { QueryHelper } = require("../helpers/bts-query-utils");
+const JWT = require('jsonwebtoken');
 const {
   RuntimeError,
   ResourceNotFoundError,
@@ -27,7 +28,7 @@ class DeliveryChargeService {
    * @param {function} next - The callback used to pass control to the next action/middleware
    */
    createDeliveryCharge(req, res, next) {
-    let userId = req.authentication.jwt.payload.user_id;
+    let userId = JWT.decode(req.headers['x-request-jwt']).sub; //req.authentication.jwt.payload.user_id;
     let charge = req.swagger.params.charge.value;
     let deliveryChargeDetails = new DeliveryCharge({
       tax: charge.tax,

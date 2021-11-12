@@ -9,6 +9,8 @@ const { Readable } = require("stream");
 const { ObjectId } = require("mongoose").Types;
 const appDir = path.dirname(require.main.filename);
 const { Category, SubCategory, FoodType, Item } = require("../models");
+const JWT = require("jsonwebtoken");
+
 const { QueryHelper } = require("../helpers/bts-query-utils");
 const {
   RuntimeError,
@@ -32,7 +34,7 @@ class SubCategoryService {
    * @param {function} next - The callback used to pass control to the next action/middleware
    */
   createSubCategory(req, res, next) {
-    let userId = req.authentication.jwt.payload.user_id;
+    let userId = JWT.decode(req.headers["x-request-jwt"]).sub; // req.authentication.jwt.payload.user_id;
     let subCategory = req.swagger.params.subCategory.value;
     let categoryId = subCategory.category_id;
     let subCategoryName = _.trim(subCategory.name);
@@ -523,7 +525,7 @@ class SubCategoryService {
    */
   bulkCreateSubCategory(req, res, next) {
     let excelFile = req.files.file[0];
-    let userId = req.authentication.jwt.payload.user_id;
+    let userId = JWT.decode(req.headers['x-request-jwt']).sub;//req.authentication.jwt.payload.user_id;
     if (
       ["xlsx"].indexOf(
         excelFile.originalname.split(".")[

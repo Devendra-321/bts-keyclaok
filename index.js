@@ -89,18 +89,20 @@ swaggerTools.initializeMiddleware(swaggerDoc, function middleWareFunc(middleware
     if (req.url.match(allowedRegex) || (!_.isEmpty(req.swagger.operation) && req.swagger.operation['x-public-operation'] === true)) {
       return next();
     }
-    let jwtToken = req.headers['x-request-jwt'];
-    if (!jwtToken) {
-      return next(
-        new RuntimeError('Missing required JWT header')
-      );
-    }
+  
     // Allow admin for blog apis
     // if (req.swagger.operation['x-blog-api'] === true) {
     //   return JWTSecurityHelper.checkBlogRole(req, jwtToken, config.keys.jwt_secret_key, next);
     // }
 
-    if (!_.isEmpty(req.swagger.operation['x-role'] ) || req.swagger.operation['x-role'] !="") {
+    if (!_.isEmpty(req.swagger.operation['x-role'] ) || req.swagger.operation['x-role'] !="" && req.swagger.operation['x-blog-api'] === true) {
+      let jwtToken = req.headers['x-request-jwt'];
+      if (!jwtToken) {
+        return next(
+          new RuntimeError('Missing required JWT header')
+        );
+      }
+     JWTSecurityHelper.checkExistUser(req, jwtToken, next);
       return JWTSecurityHelper.checkBlogRole(req, jwtToken, config.keys.jwt_secret_key, next);
     }
 

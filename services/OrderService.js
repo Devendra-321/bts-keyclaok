@@ -6,6 +6,7 @@ const path = require("path");
 const async = require("async");
 const config = require("config");
 const moment = require("moment");
+const JWT = require('jsonwebtoken');
 const randomstring = require("randomstring");
 const {
   Order,
@@ -45,11 +46,10 @@ class OrderService {
     // let userId = req.authentication.jwt.payload.user_id;
     // let email = req.authentication.jwt.payload.email;
     // let name = req.authentication.jwt.payload.name;
-    let jwtToken = req.headers['x-request-jwt'];
-    console.log(jwtToken);
-    let userId = "f72ed6ee-b942-4364-b0fc-80bd25251873";
-    let email = "test1@test.co";
-    let name ="Test";
+    var tokendecode=JWT.decode(req.headers['x-request-jwt']); 
+    let userId = tokendecode.sub ;
+    let email = tokendecode.email;
+    let name =tokendecode.name;
     let order = req.swagger.params.order.value;
     let itemIds = _.map(order.item_details, "id");
     let itemTotal = order.item_details.reduce(

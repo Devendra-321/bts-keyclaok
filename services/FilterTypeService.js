@@ -4,6 +4,8 @@ const _ = require("lodash");
 const async = require("async");
 const { FilterType, FilterData } = require("../models");
 const { QueryHelper } = require("../helpers/bts-query-utils");
+const JWT = require("jsonwebtoken");
+
 const {
   ValidationError,
   RuntimeError,
@@ -26,8 +28,8 @@ class FilterTypeService {
    * @param {IncomingMessage} res - The http response object
    * @param {function} next - The callback used to pass control to the next action/middleware
    */
-   createFilterType(req, res, next) {
-    let userId = req.authentication.jwt.payload.user_id;
+  createFilterType(req, res, next) {
+    let userId = JWT.decode(req.headers["x-request-jwt"]).sub; //req.authentication.jwt.payload.user_id;
     let filter = req.swagger.params.filterType.value;
     let filterDetails = new FilterType({
       name: filter.name,

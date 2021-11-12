@@ -4,6 +4,7 @@ const _ = require("lodash");
 const async = require("async");
 const { OptionAttribute } = require("../models");
 const { QueryHelper } = require("../helpers/bts-query-utils");
+const JWT = require('jsonwebtoken');
 const {
   RuntimeError,
   ResourceNotFoundError,
@@ -25,7 +26,7 @@ class AttributeService {
    * @param {function} next - The callback used to pass control to the next action/middleware
    */
    createAttribute(req, res, next) {
-    let userId = req.authentication.jwt.payload.user_id;
+    let userId = JWT.decode(req.headers['x-request-jwt']).sub; //req.authentication.jwt.payload.user_id;
     let attribute = req.swagger.params.attribute.value;
     let attributeDetails = new OptionAttribute({
       name: attribute.name,

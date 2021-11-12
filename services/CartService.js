@@ -2,10 +2,16 @@
 
 const fs = require('fs');
 const _ = require("lodash");
-const async = require('async');
-const { Cart, Item } = require('../models');
-const { QueryHelper } = require('../helpers/bts-query-utils');
-const { ValidationError, RuntimeError, ResourceNotFoundError } = require('../helpers/bts-error-utils');
+const async = require("async");
+const { Cart, Item } = require("../models");
+const { QueryHelper } = require("../helpers/bts-query-utils");
+const JWT = require("jsonwebtoken");
+
+const {
+  ValidationError,
+  RuntimeError,
+  ResourceNotFoundError,
+} = require("../helpers/bts-error-utils");
 
 /**
  * Creates an instance of cart service
@@ -24,7 +30,7 @@ class CartService {
    * @param {function} next - The callback used to pass control to the next action/middleware
    */
    createCart(req, res, next) {
-    let userId = req.authentication.jwt.payload.user_id;
+    let userId = JWT.decode(req.headers['x-request-jwt']).sub;//req.authentication.jwt.payload.user_id;
     let cart = req.swagger.params.cart.value;
     async.parallel([
       (cb) => {
@@ -76,7 +82,7 @@ class CartService {
    * @param {function} next - The callback used to pass control to the next action/middleware
    */
    getCartList(req, res, next) {
-    let userId = req.authentication.jwt.payload.user_id;
+    let userId = JWT.decode(req.headers['x-request-jwt']).sub;//req.authentication.jwt.payload.user_id;
     let query = QueryHelper.getQuery(req.swagger.params);
     query.user_id = userId;
     Cart.find(query)

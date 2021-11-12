@@ -19,9 +19,9 @@ const PaymentGatewaySchema = new Schema(
       type: Boolean,
       default: true
     },
-    'created_by': {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true
+    created_by: {
+      type: String,
+      required: true,
     },
     'is_deleted': {
       type: Boolean,

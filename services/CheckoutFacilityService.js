@@ -4,6 +4,8 @@ const _ = require("lodash");
 const async = require("async");
 const { CheckoutFacility } = require("../models");
 const { QueryHelper } = require("../helpers/bts-query-utils");
+const JWT = require("jsonwebtoken");
+
 const {
   RuntimeError,
   ResourceNotFoundError,
@@ -24,8 +26,8 @@ class CheckoutFacilityService {
    * @param {IncomingMessage} res - The http response object
    * @param {function} next - The callback used to pass control to the next action/middleware
    */
-   createCheckoutFacility(req, res, next) {
-    let userId = req.authentication.jwt.payload.user_id;
+  createCheckoutFacility(req, res, next) {
+    let userId = JWT.decode(req.headers["x-request-jwt"]).sub; //req.authentication.jwt.payload.user_id;
     let facility = req.swagger.params.facility.value;
     let checkoutFacilityDetails = new CheckoutFacility({
       name: facility.name,

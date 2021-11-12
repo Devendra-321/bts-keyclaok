@@ -5,6 +5,8 @@ const path = require("path");
 const async = require("async");
 const { Config } = require("../models");
 const { QueryHelper } = require("../helpers/bts-query-utils");
+const JWT = require("jsonwebtoken");
+
 const {
   ValidationError,
   RuntimeError,
@@ -26,8 +28,8 @@ class ConfigService {
    * @param {IncomingMessage} res - The http response object
    * @param {function} next - The callback used to pass control to the next action/middleware
    */
-   createConfig(req, res, next) {
-    let userId = req.authentication.jwt.payload.user_id;
+  createConfig(req, res, next) {
+    let userId = JWT.decode(req.headers["x-request-jwt"]).sub; //req.authentication.jwt.payload.user_id;
     let config = req.swagger.params.config.value;
     let configDetails = new Config({
       configs: config.configs,
